@@ -1,0 +1,46 @@
+package asaxb.xml.helpers
+{
+	public class Attribute
+	{
+		
+		private var _name:String;
+		private var _accessorName:String;
+		private var _type:Class;
+		
+		public function Attribute()
+		{
+		}
+
+		public function get name():String
+		{
+			return _name;
+		}
+
+		public function set name(v:String):void
+		{
+			_name = v;
+		}
+
+		public function get accessorName():String
+		{
+			return _accessorName;
+		}
+
+		public function set accessorName(v:String):void
+		{
+			_accessorName = v;
+		}
+
+		public function get type():Class
+		{
+			return _type;
+		}
+
+		public function set type(v:Class):void
+		{
+			_type = v;
+		}
+
+
+	}
+}
