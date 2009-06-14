@@ -57,6 +57,10 @@ package asaxb.xml.bind
 					result = (value=="true");
 					break;
 				
+				case uint:
+					result = uint(value);
+					break;
+					
 				case int:
 					result = int(value);
 					break
