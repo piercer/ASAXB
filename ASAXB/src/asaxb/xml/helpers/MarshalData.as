@@ -105,6 +105,16 @@ package asaxb.xml.helpers
 					}
 				}
 			}
+			for each (var variable:Variable in type.variables)
+			{
+				for each (metadata in variable.metaData)
+				{
+					if (metadata.name == "XmlElements")
+					{
+						_elementsLists.push(createXMLDataFromMember(metadata,variable));
+					}
+				}
+			}
 		}
 		
 		private function createXMLDataFromMember(metadata:MetaData,member:AbstractMember):XMLData
