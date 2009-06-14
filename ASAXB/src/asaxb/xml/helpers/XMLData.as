@@ -6,6 +6,7 @@ package asaxb.xml.helpers
 		private var _name:String;
 		private var _accessorName:String;
 		private var _type:Class;
+		private var _listClass:Class;
 		
 		public function XMLData()
 		{
@@ -39,6 +40,16 @@ package asaxb.xml.helpers
 		public function set type(v:Class):void
 		{
 			_type = v;
+		}
+
+		public function get listClass():Class
+		{
+			return _listClass;
+		}
+
+		public function set listClass(v:Class):void
+		{
+			_listClass = v;
 		}
 
 

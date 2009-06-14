@@ -28,6 +28,22 @@ package asaxb.xml.bind
 				object[element.accessorName] = getValueFromString(xml[element.name],element.type);
 			}
 			
+			for each (var elementList:XMLData in _marshalData.elementsLists)
+			{
+				var objectsXML:XMLList = xml[elementList.name];
+				var nObjects:int = objectsXML.length();
+				var innerObjects:Array = [];
+				var innerContext:ASAXBContext = ASAXBContext.newInstance(elementList.listClass);
+				var innerUnmarshaller:Unmarshaller = innerContext.createUnmarshaller();
+				for (var i:int=0;i<nObjects;i++)
+				{
+					var objectXML:XML = objectsXML[i];
+					var innerObject:* = innerUnmarshaller.unmarshal(objectXML);
+					innerObjects.push(innerObject);
+				}
+				object[elementList.accessorName] = innerObjects;
+			}
+			
 			return object;
 		}
 		

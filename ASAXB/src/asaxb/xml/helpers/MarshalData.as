@@ -1,6 +1,8 @@
 package asaxb.xml.helpers
 {
 		
+	import flash.utils.getDefinitionByName;
+	
 	import org.as3commons.reflect.AbstractMember;
 	import org.as3commons.reflect.Accessor;
 	import org.as3commons.reflect.MetaData;
@@ -48,7 +50,7 @@ package asaxb.xml.helpers
 				{
 					if (metadata.name == "XmlAttribute")
 					{
-						_attributes.push(createXMLDataFromMember(metadata.getArgument('name').value,accessor));
+						_attributes.push(createXMLDataFromMember(metadata,accessor));
 					}
 				}
 			}	
@@ -58,7 +60,7 @@ package asaxb.xml.helpers
 				{
 					if (metadata.name == "XmlAttribute")
 					{
-						_attributes.push(createXMLDataFromMember(metadata.getArgument('name').value,variable));
+						_attributes.push(createXMLDataFromMember(metadata,variable));
 					}					
 				}
 			}		
@@ -74,7 +76,17 @@ package asaxb.xml.helpers
 				{
 					if (metadata.name == "XmlElement")
 					{
-						_elements.push(createXMLDataFromMember(metadata.getArgument('name').value,accessor));
+						_elements.push(createXMLDataFromMember(metadata,accessor));
+					}
+				}
+			}
+			for each (var variable:Variable in type.variables)
+			{
+				for each (metadata in variable.metaData)
+				{
+					if (metadata.name == "XmlElement")
+					{
+						_elements.push(createXMLDataFromMember(metadata,variable));
 					}
 				}
 			}
@@ -89,19 +101,23 @@ package asaxb.xml.helpers
 				{
 					if (metadata.name == 'XmlElements')
 					{
-						_elementsLists.push(createXMLDataFromMember(metadata.getArgument('name').value,accessor));
+						_elementsLists.push(createXMLDataFromMember(metadata,accessor));
 					}
 				}
 			}
 		}
 		
-		private function createXMLDataFromMember(name:String,member:AbstractMember):XMLData
-		{
-			var attribute:XMLData = new XMLData();
-			attribute.name = name;
-			attribute.accessorName = member.name;
-			attribute.type = member.type.clazz;
-			return attribute;
+		private function createXMLDataFromMember(metadata:MetaData,member:AbstractMember):XMLData
+		{			
+			var data:XMLData = new XMLData();
+			data.name = metadata.getArgument('name').value;
+			data.accessorName = member.name;
+			data.type = member.type.clazz;
+			if (metadata.getArgument('type'))
+			{
+				data.listClass = getDefinitionByName(metadata.getArgument('type').value) as Class;
+			}
+			return data;
 		}
 
 		public function get rootNodeName():String
