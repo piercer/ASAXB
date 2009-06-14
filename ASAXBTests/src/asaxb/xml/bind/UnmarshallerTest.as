@@ -13,12 +13,16 @@ package asaxb.xml.bind
 		private var _unmarshaller:Unmarshaller;
 		private var _object:OuterObject;
 		
+		private const _xml:XML = <outer-object level="3" outer="false">
+									<test-element>This is an element</test-element>
+								 </outer-object>;
+		
 		[Before]
 		public function setUp():void
 		{
 			var context:ASAXBContext = ASAXBContext.newInstance(OuterObject);
 			_unmarshaller = context.createUnmarshaller();
-			_object = _unmarshaller.unmarshal(<outer-object level="3" outer="false"><test-element>This is an element</test-element></outer-object>);
+			_object = _unmarshaller.unmarshal(_xml);
 		}
 		
 		[Test]
