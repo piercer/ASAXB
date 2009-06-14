@@ -5,15 +5,31 @@ package asaxb.test
 	public class OuterObject
 	{
 		
+		[XmlAttribute(name="var1")]
+		public var variable1:String;
+		
+		[XmlElement(name="var2")]
+		public var variable2:Boolean;
+		
 		private var _level:int;
 		private var _outer:Boolean;
 		private var _element:String;
+		private var _innerObjects:Array;
+		
 		
 		public function OuterObject()
 		{
 			_level = 1;
 			_outer = true;
 			_element = "Test Element";
+			_innerObjects = [];
+			variable1 = "This is a valiable attribute";
+			variable2 = true;
+		}
+		
+		public function addInnerObject(innerObject:InnerObject):void
+		{
+			_innerObjects.push(innerObject);
 		}
 		
 		[XmlAttribute(name="level")]
@@ -49,11 +65,10 @@ package asaxb.test
 			_element = value;
 		}
 
-
 		[XmlElements(name="inner-objects")]
-		public function get element2():Array
+		public function get innerObjects():Array
 		{
-			return [ new InnerObject(2), new InnerObject(2), new InnerObject(2) ];
+			return _innerObjects;
 		}
 		
 		public function ignoreMe():void

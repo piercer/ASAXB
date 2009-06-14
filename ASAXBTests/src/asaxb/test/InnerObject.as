@@ -6,10 +6,17 @@ package asaxb.test
 	{
 		
 		private var _level:uint;
+		private var _innerObjects:Array;
 
 		public function InnerObject(level:uint)
 		{
 			_level = level;
+			_innerObjects = [];
+		}
+		
+		public function addInnerObject(innerObject:InnerInnerObject):void
+		{
+			_innerObjects.push(innerObject);
 		}
 		
 		[XmlAttribute(name="level")]
@@ -27,7 +34,7 @@ package asaxb.test
 		[XmlElements(name="inner-inner-objects")]
 		public function get elements():Array
 		{
-			return [ new InnerInnerObject(3) ];
+			return _innerObjects;
 		}
 
 

@@ -28,26 +28,26 @@ package asaxb.xml.helpers
 		[Test]
 		public function testAttributesIsRightLength():void
 		{
-			assertThat(_attributes.length,equalTo(2));
+			assertThat(_attributes.length,equalTo(3));
 		}
 
 		[Test]
 		public function testAttribute1IsInt():void
 		{
-			var attribute:Attribute = getAttributeWithAccessorName("attribute1");
+			var attribute:XMLData = getAttributeWithAccessorName("attribute1");
 			assertThat(attribute.type,equalTo(int));
 		}
 
 		[Test]
 		public function testAttribute2IsBoolean():void
 		{
-			var attribute:Attribute = getAttributeWithAccessorName("attribute2");
+			var attribute:XMLData = getAttributeWithAccessorName("attribute2");
 			assertThat(attribute.type,equalTo(Boolean));
 		}
 
-		private function getAttributeWithAccessorName(accessorName:String):Attribute
+		private function getAttributeWithAccessorName(accessorName:String):XMLData
 		{
-			var attribute:Attribute;
+			var attribute:XMLData;
 			for (var i:int=0;i<_attributes.length;i++)
 			{
 				attribute = _attributes[i];

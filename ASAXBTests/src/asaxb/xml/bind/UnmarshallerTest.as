@@ -13,7 +13,7 @@ package asaxb.xml.bind
 		private var _unmarshaller:Unmarshaller;
 		private var _object:OuterObject;
 		
-		private const _xml:XML = <outer-object level="3" outer="false">
+		private const _xml:XML = <outer-object level="3" outer="false" var1="Variable from XML">
 									<test-element>This is an element</test-element>
 								 </outer-object>;
 		
@@ -48,6 +48,13 @@ package asaxb.xml.bind
 		{			
 			assertThat(_object.element,equalTo("This is an element"));
 		}
+
+		[Test]
+		public function testVariable1IsCorrect():void
+		{			
+			assertThat(_object.variable1,equalTo("Variable from XML"));
+		}
+
 
 	}
 }
