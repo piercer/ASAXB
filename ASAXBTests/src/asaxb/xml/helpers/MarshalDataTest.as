@@ -1,8 +1,7 @@
-package asaxb.helpers
+package asaxb.xml.helpers
 {
+	
 	import asaxb.test.OuterObject;
-	import asaxb.xml.helpers.Attribute;
-	import asaxb.xml.helpers.MarshalData;
 	
 	import org.flexunit.assertThat;
 	import org.hamcrest.object.equalTo;
