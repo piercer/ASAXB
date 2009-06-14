@@ -6,8 +6,7 @@ package asaxb.xml.bind
 	import flash.xml.XMLNode;
 	import flash.xml.XMLNodeType;
 	
-	import asaxb.xml.helpers.Attribute;
-	import asaxb.xml.helpers.Element;
+	import asaxb.xml.helpers.XMLData;
 	import asaxb.xml.helpers.MarshalData;
 
 	public class Marshaller
@@ -20,15 +19,15 @@ package asaxb.xml.bind
 			_marshalData = marshalData; 
 		}
 				
-		public function marshall(object:*):XML
+		public function marshal(object:*):XML
 		{
 			
 			var name:String;
-			var element:Element;
+			var element:XMLData;
 
 			var root:XML = <{_marshalData.rootNodeName}/>;
 			
-			for each (var attribute:Attribute in _marshalData.attributes)
+			for each (var attribute:XMLData in _marshalData.attributes)
 			{
 				root.@[attribute.name]=object[attribute.accessorName];
 			}
@@ -49,7 +48,7 @@ package asaxb.xml.bind
 					var innerClass:Class = Class(getDefinitionByName(getQualifiedClassName(innerElement)));
 					var context:ASAXBContext = ASAXBContext.newInstance(innerClass);
 					var marshaller:Marshaller = context.createMarshaller();
-					var elementXML:XML = marshaller.marshall(innerElement);
+					var elementXML:XML = marshaller.marshal(innerElement);
 					root.appendChild(elementXML);
 				}
 			}			

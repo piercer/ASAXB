@@ -4,8 +4,7 @@
     <classEntry path="asaxb.xml.bind.ASAXBContext"/>
     <classEntry path="asaxb.xml.bind.Marshaller"/>
     <classEntry path="asaxb.xml.bind.Unmarshaller"/>
-    <classEntry path="asaxb.xml.helpers.Attribute"/>
-    <classEntry path="asaxb.xml.helpers.Element"/>
+    <classEntry path="asaxb.xml.helpers.XMLData"/>
     <classEntry path="asaxb.xml.helpers.MarshalData"/>
   </includeClasses>
   <includeResources/>

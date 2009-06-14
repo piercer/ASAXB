@@ -1,9 +1,11 @@
 package asaxb.xml.helpers
 {
-	
+		
+	import org.as3commons.reflect.AbstractMember;
 	import org.as3commons.reflect.Accessor;
 	import org.as3commons.reflect.MetaData;
 	import org.as3commons.reflect.Type;
+	import org.as3commons.reflect.Variable;
 
 	public class MarshalData
 	{
@@ -37,22 +39,31 @@ package asaxb.xml.helpers
 		
 		private function extractAttributes(type:Type):void
 		{
+			var metadata:MetaData;
+			var attribute:XMLData;
 			_attributes = [];
 			for each (var accessor:Accessor in type.accessors)
 			{ 
-				for each (var metadata:MetaData in accessor.metaData)
+				for each (metadata in accessor.metaData)
 				{
 					if (metadata.name == "XmlAttribute")
 					{
-						var attribute:Attribute = new Attribute();
-						attribute.name = metadata.getArgument('name').value;
-						attribute.accessorName = accessor.name;
-						attribute.type = accessor.type.clazz;
-						_attributes.push(attribute);
+						_attributes.push(createXMLDataFromMember(metadata.getArgument('name').value,accessor));
 					}
 				}
-			}			
+			}	
+			for each (var variable:Variable in type.variables)
+			{
+				for each (metadata in variable.metaData)
+				{
+					if (metadata.name == "XmlAttribute")
+					{
+						_attributes.push(createXMLDataFromMember(metadata.getArgument('name').value,variable));
+					}					
+				}
+			}		
 		}
+		
 		
 		private function extractElements(type:Type):void
 		{
@@ -63,11 +74,7 @@ package asaxb.xml.helpers
 				{
 					if (metadata.name == "XmlElement")
 					{
-						var element:Element = new Element();
-						element.name = metadata.getArgument('name').value;
-						element.accessorName = accessor.name;
-						element.type = accessor.type.clazz;
-						_elements.push(element);
+						_elements.push(createXMLDataFromMember(metadata.getArgument('name').value,accessor));
 					}
 				}
 			}
@@ -82,13 +89,19 @@ package asaxb.xml.helpers
 				{
 					if (metadata.name == 'XmlElements')
 					{
-						var element:Element = new Element();
-						element.name = metadata.getArgument('name').value;
-						element.accessorName = accessor.name;
-						_elementsLists.push(element);
+						_elementsLists.push(createXMLDataFromMember(metadata.getArgument('name').value,accessor));
 					}
 				}
 			}
+		}
+		
+		private function createXMLDataFromMember(name:String,member:AbstractMember):XMLData
+		{
+			var attribute:XMLData = new XMLData();
+			attribute.name = name;
+			attribute.accessorName = member.name;
+			attribute.type = member.type.clazz;
+			return attribute;
 		}
 
 		public function get rootNodeName():String

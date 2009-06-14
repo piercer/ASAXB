@@ -1,13 +1,13 @@
 package asaxb.xml.helpers
 {
-	public class Attribute
+	public class XMLData
 	{
 		
 		private var _name:String;
 		private var _accessorName:String;
 		private var _type:Class;
 		
-		public function Attribute()
+		public function XMLData()
 		{
 		}
 

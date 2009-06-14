@@ -1,9 +1,8 @@
 package asaxb.xml.bind
 {
 
-	import asaxb.xml.helpers.Attribute;
-	import asaxb.xml.helpers.Element;
 	import asaxb.xml.helpers.MarshalData;
+	import asaxb.xml.helpers.XMLData;
 
 	public class Unmarshaller
 	{
@@ -19,12 +18,12 @@ package asaxb.xml.bind
 		{
 			var object:* = new _marshalData.klass();
 			
-			for each (var attribute:Attribute in _marshalData.attributes)
+			for each (var attribute:XMLData in _marshalData.attributes)
 			{
 				object[attribute.accessorName] = getValueFromString(xml.@[attribute.name],attribute.type);
 			}
 
-			for each (var element:Element in _marshalData.elements)
+			for each (var element:XMLData in _marshalData.elements)
 			{
 				object[element.accessorName] = getValueFromString(xml[element.name],element.type);
 			}
