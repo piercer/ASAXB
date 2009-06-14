@@ -1,6 +1,7 @@
 package asaxb.xml.bind
 {
 	
+	import asaxb.test.InnerInnerObject;
 	import asaxb.test.InnerObject;
 	import asaxb.test.OuterObject;
 	
@@ -14,7 +15,7 @@ package asaxb.xml.bind
 		private var _unmarshaller:Unmarshaller;
 		private var _object:OuterObject;
 		
-		private const _xml:XML = <outer-object level="3" outer="false" var1="Variable from XML">
+		private const _xml:XML = <outer-object level="1" outer="false" var1="Variable from XML">
 									<test-element>This is an element</test-element>
 									<var2>false</var2>
 									<inner-object level="2">
@@ -45,7 +46,7 @@ package asaxb.xml.bind
 		[Test]
 		public function testAttribute1isCorrect():void
 		{			
-			assertThat(_object.attribute1,equalTo(3));
+			assertThat(_object.attribute1,equalTo(1));
 		}
 
 		[Test]
@@ -89,7 +90,10 @@ package asaxb.xml.bind
 		public function testInnerObject1IsCorrect():void
 		{
 			var innerObject:InnerObject = _object.innerObjects[1];
-			assertThat(innerObject.elements.length,equalTo(1));			
+			assertThat(innerObject.elements.length,equalTo(1));
+			var innerInnerObject:InnerInnerObject = innerObject.elements[0];
+			assertThat(innerInnerObject.attribute1,equalTo(3));	
+			assertThat(innerInnerObject.element1,equalTo("I'm inside at level 3"));	
 		}
 
 	}
