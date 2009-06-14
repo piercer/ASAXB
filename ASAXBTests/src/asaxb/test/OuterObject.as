@@ -65,10 +65,15 @@ package asaxb.test
 			_element = value;
 		}
 
-		[XmlElements(name="inner-objects")]
+		[XmlElements(name="inner-object",type="asaxb.test.InnerObject")]
 		public function get innerObjects():Array
 		{
 			return _innerObjects;
+		}
+
+		public function set innerObjects(innerObjects:Array):void
+		{
+			_innerObjects = innerObjects;
 		}
 		
 		public function ignoreMe():void

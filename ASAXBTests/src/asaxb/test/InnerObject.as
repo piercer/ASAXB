@@ -6,11 +6,11 @@ package asaxb.test
 	{
 		
 		private var _level:uint;
+		private var _element1:String;
 		private var _innerObjects:Array;
 
-		public function InnerObject(level:uint)
+		public function InnerObject()
 		{
-			_level = level;
 			_innerObjects = [];
 		}
 		
@@ -24,6 +24,11 @@ package asaxb.test
 		{
 			return _level;
 		}
+
+		public function set attribute1(level:uint):void
+		{
+			_level = level;
+		}
 		
 		[XmlElement(name="element")]
 		public function get element1():String
@@ -31,10 +36,20 @@ package asaxb.test
 			return "I'm inside at level "+_level;
 		}
 
-		[XmlElements(name="inner-inner-objects")]
+		public function set element1(element1:String):void
+		{
+			_element1 = element1;
+		}
+
+		[XmlElements(name="inner-inner-object",type="asaxb.test.InnerInnerObject")]
 		public function get elements():Array
 		{
 			return _innerObjects;
+		}
+
+		public function set elements(innerObjects:Array):void
+		{
+			_innerObjects = innerObjects;
 		}
 
 

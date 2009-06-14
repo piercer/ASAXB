@@ -11,12 +11,14 @@ package asaxb.xml.helpers
 
 		private var _marshalData:MarshalData;
 		private var _attributes:Array;
+		private var _elements:Array;
 				
 		[Before]
 		public function setUp():void
 		{
 			_marshalData = new MarshalData(OuterObject);
 			_attributes = _marshalData.attributes;
+			_elements = _marshalData.elements;
 		}
 		
 		[Test]
@@ -29,6 +31,12 @@ package asaxb.xml.helpers
 		public function testAttributesIsRightLength():void
 		{
 			assertThat(_attributes.length,equalTo(3));
+		}
+
+		[Test]
+		public function testElementsIsRightLength():void
+		{
+			assertThat(_elements.length,equalTo(2));
 		}
 
 		[Test]

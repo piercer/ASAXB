@@ -1,6 +1,8 @@
 package asaxb.xml.helpers
 {
 		
+	import asaxb.test.InnerObject;
+	
 	import org.flexunit.assertThat;
 	import org.hamcrest.object.equalTo;
 
@@ -10,6 +12,7 @@ package asaxb.xml.helpers
 		private const dataName:String = 'test-attribute';
 		private const dataAccessorName:String = 'test-attribute-accessor';
 		private const dataType:Class = Boolean;
+		private const listClass:Class = InnerObject;
 
 		private var _data:XMLData;
 				
@@ -20,6 +23,7 @@ package asaxb.xml.helpers
 			_data.name = dataName;
 			_data.accessorName = dataAccessorName;
 			_data.type = dataType;
+			_data.listClass = listClass;
 		}
 		
 		[Test]
@@ -35,9 +39,15 @@ package asaxb.xml.helpers
 		}
 
 		[Test]
-		public function testype():void
+		public function testType():void
 		{
 			assertThat(_data.type,equalTo(dataType));
+		}
+
+		[Test]
+		public function testListClass():void
+		{
+			assertThat(_data.listClass,equalTo(listClass));
 		}
 
 	}

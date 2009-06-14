@@ -1,6 +1,7 @@
 package asaxb.xml.bind
 {
 	
+	import asaxb.test.InnerObject;
 	import asaxb.test.OuterObject;
 	
 	import org.flexunit.assertThat;
@@ -15,6 +16,16 @@ package asaxb.xml.bind
 		
 		private const _xml:XML = <outer-object level="3" outer="false" var1="Variable from XML">
 									<test-element>This is an element</test-element>
+									<var2>false</var2>
+									<inner-object level="2">
+										<element>I'm inside at level 2</element>
+									</inner-object>
+									<inner-object level="2">
+										<element>I'm inside at level 2</element>
+										<inner-inner-object level="3">
+											<element>I'm inside at level 3</element>
+										</inner-inner-object>
+									</inner-object>
 								 </outer-object>;
 		
 		[Before]
@@ -55,6 +66,31 @@ package asaxb.xml.bind
 			assertThat(_object.variable1,equalTo("Variable from XML"));
 		}
 
+		[Test]
+		public function testVariable2IsCorrect():void
+		{
+			assertThat(_object.variable2,equalTo(false));
+		}
+		
+		[Test]
+		public function testInnerObjectsIsRightLength():void
+		{
+			assertThat(_object.innerObjects.length,equalTo(2));			
+		}
+
+		[Test]
+		public function testInnerObject0IsCorrect():void
+		{
+			var innerObject:InnerObject = _object.innerObjects[0];
+			assertThat(innerObject.elements.length,equalTo(0));			
+		}
+
+		[Test]
+		public function testInnerObject1IsCorrect():void
+		{
+			var innerObject:InnerObject = _object.innerObjects[1];
+			assertThat(innerObject.elements.length,equalTo(1));			
+		}
 
 	}
 }
