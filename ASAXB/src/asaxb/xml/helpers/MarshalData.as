@@ -127,6 +127,11 @@ package asaxb.xml.helpers
 			{
 				data.listClass = getDefinitionByName(metadata.getArgument('type').value) as Class;
 			}
+			if (member.hasMetaData("XmlElementWrapper"))
+			{
+				var wrapper:MetaData = member.getMetaData("XmlElementWrapper")[0];
+				data.wrapperNodeName = wrapper.getArgument('name').value;
+			}
 			return data;
 		}
 

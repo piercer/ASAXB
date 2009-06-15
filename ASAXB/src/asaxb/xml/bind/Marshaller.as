@@ -24,6 +24,7 @@ package asaxb.xml.bind
 			
 			var name:String;
 			var element:XMLData;
+			var parentNode:XML;
 
 			var root:XML = <{_marshalData.rootNodeName}/>;
 			
@@ -34,23 +35,24 @@ package asaxb.xml.bind
 
 			for each (element in _marshalData.elements)
 			{
-				var elementNode:XMLNode;
+				parentNode = getParentNodeForElement(root,element);
 				var marshalledValue:* = getElementValueFromXML(element,object);
 				if (marshalledValue is XML)
 				{
-					root.appendChild(marshalledValue);
+					parentNode.appendChild(marshalledValue);
 				}
 				else
 				{
-					elementNode = new XMLNode(XMLNodeType.ELEMENT_NODE,element.name)
+					var elementNode:XMLNode = new XMLNode(XMLNodeType.ELEMENT_NODE,element.name)
 					var elementValueNode:XMLNode = new XMLNode(XMLNodeType.TEXT_NODE,marshalledValue);
 					elementNode.appendChild(elementValueNode);
-					root.appendChild(elementNode);
+					parentNode.appendChild(elementNode);
 				}
 			}
 			
 			for each (element in _marshalData.elementsLists)
 			{
+				parentNode = getParentNodeForElement(root,element);
 				var elements:Array = object[element.accessorName];
 				for each (var innerElement:* in elements)
 				{
@@ -58,14 +60,25 @@ package asaxb.xml.bind
 					var context:ASAXBContext = ASAXBContext.newInstance(innerClass);
 					var marshaller:Marshaller = context.createMarshaller();
 					var elementXML:XML = marshaller.marshal(innerElement);
-					root.appendChild(elementXML);
+					parentNode.appendChild(elementXML);
 				}
 			}			
 
 			return root;
 		}
 		
-		public function getElementValueFromXML(element:XMLData, object:*):*
+		private function getParentNodeForElement(root:XML,element:XMLData):XML
+		{
+			var parentNode:XML = root;
+			if (element.wrapperNodeName)
+			{
+				parentNode = <{element.wrapperNodeName}/>;
+				root.appendChild(parentNode);
+			}
+			return parentNode;
+		}
+		
+		private function getElementValueFromXML(element:XMLData, object:*):*
 		{
 			var result:*;
 			switch (element.type)

@@ -5,6 +5,7 @@ package asaxb.xml.helpers
 		
 		private var _name:String;
 		private var _accessorName:String;
+		private var _wrapperNodeName:String;
 		private var _type:Class;
 		private var _listClass:Class;
 		
@@ -50,6 +51,16 @@ package asaxb.xml.helpers
 		public function set listClass(v:Class):void
 		{
 			_listClass = v;
+		}
+
+		public function get wrapperNodeName():String
+		{
+			return _wrapperNodeName;
+		}
+
+		public function set wrapperNodeName(v:String):void
+		{
+			_wrapperNodeName = v;
 		}
 
 
