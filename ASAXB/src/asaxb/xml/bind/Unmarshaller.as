@@ -69,6 +69,10 @@ package asaxb.xml.bind
 					result = value;
 					break;
 					
+				case Number:
+					result = Number(value);
+					break;
+					
 			}
 			return result;
 		}
