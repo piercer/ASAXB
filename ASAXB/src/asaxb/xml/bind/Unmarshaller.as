@@ -72,9 +72,24 @@ package asaxb.xml.bind
 				case Number:
 					result = Number(value);
 					break;
+
+				default:
+					var innerContext:ASAXBContext = ASAXBContext.newInstance(type);
+					var innerUnmarshaller:Unmarshaller = innerContext.createUnmarshaller();
+					var InnerMarshalData:MarshalData = innerUnmarshaller.marshalData;
+					var rootNode:String = InnerMarshalData.rootNodeName;
+					if (rootNode!=null)
+					{
+						result = innerUnmarshaller.unmarshal(new XML(value));
+					}
 					
 			}
 			return result;
+		}
+		
+		public function get marshalData():MarshalData
+		{
+			return _marshalData;
 		}
 
 	}
