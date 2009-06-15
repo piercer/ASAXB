@@ -25,12 +25,13 @@ package asaxb.xml.bind
 
 			for each (var element:XMLData in _marshalData.elements)
 			{
-				object[element.accessorName] = getValueFromString(xml[element.name],element.type);
+				var elementXML:XMLList = getElementXML(xml,element);
+				object[element.accessorName] = getValueFromString(elementXML,element.type);
 			}
 			
 			for each (var elementList:XMLData in _marshalData.elementsLists)
 			{
-				var objectsXML:XMLList = xml[elementList.name];
+				var objectsXML:XMLList = getElementXML(xml,elementList);
 				var nObjects:int = objectsXML.length();
 				var innerObjects:Array = [];
 				var innerContext:ASAXBContext = ASAXBContext.newInstance(elementList.listClass);
@@ -45,6 +46,20 @@ package asaxb.xml.bind
 			}
 			
 			return object;
+		}
+		
+		public function getElementXML(xml:XML,element:XMLData):XMLList
+		{
+			var elementXML:XMLList;
+			if (element.wrapperNodeName)
+			{
+				elementXML = xml[element.wrapperNodeName][element.name];
+			}
+			else
+			{
+				elementXML = xml[element.name];
+			}
+			return elementXML;	
 		}
 		
 		public function getValueFromString(value:String, type:Class):*
