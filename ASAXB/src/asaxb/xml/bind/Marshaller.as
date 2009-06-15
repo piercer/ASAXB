@@ -1,13 +1,13 @@
 package asaxb.xml.bind
 {
 	
+	import asaxb.xml.helpers.MarshalData;
+	import asaxb.xml.helpers.XMLData;
+	
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
 	import flash.xml.XMLNode;
 	import flash.xml.XMLNodeType;
-	
-	import asaxb.xml.helpers.XMLData;
-	import asaxb.xml.helpers.MarshalData;
 
 	public class Marshaller
 	{
@@ -34,10 +34,19 @@ package asaxb.xml.bind
 
 			for each (element in _marshalData.elements)
 			{
-				var elementNode:XMLNode = new XMLNode(XMLNodeType.ELEMENT_NODE,element.name);
-				var elementValueNode:XMLNode = new XMLNode(XMLNodeType.TEXT_NODE,object[element.accessorName]);
-				elementNode.appendChild(elementValueNode);
-				root.appendChild(elementNode);
+				var elementNode:XMLNode;
+				var marshalledValue:* = getElementValueFromXML(element,object);
+				if (marshalledValue is XML)
+				{
+					root.appendChild(marshalledValue);
+				}
+				else
+				{
+					elementNode = new XMLNode(XMLNodeType.ELEMENT_NODE,element.name)
+					var elementValueNode:XMLNode = new XMLNode(XMLNodeType.TEXT_NODE,marshalledValue);
+					elementNode.appendChild(elementValueNode);
+					root.appendChild(elementNode);
+				}
 			}
 			
 			for each (element in _marshalData.elementsLists)
@@ -55,6 +64,31 @@ package asaxb.xml.bind
 
 			return root;
 		}
+		
+		public function getElementValueFromXML(element:XMLData, object:*):*
+		{
+			var result:*;
+			switch (element.type)
+			{
+
+				case Boolean:				
+				case uint:
+				case int:
+				case String:					
+				case Number:
+					result = object[element.accessorName];
+					break;
+					
+				default:
+					var innerClass:Class = Class(getDefinitionByName(getQualifiedClassName(element.type)));
+					var context:ASAXBContext = ASAXBContext.newInstance(innerClass);
+					var marshaller:Marshaller = context.createMarshaller();
+					result = marshaller.marshal(object[element.accessorName]);
+					break;
+			}
+			return result;
+		}
+
 
 	}
 
