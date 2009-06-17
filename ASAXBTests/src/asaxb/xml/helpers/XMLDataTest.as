@@ -9,10 +9,11 @@ package asaxb.xml.helpers
 	public class XMLDataTest
 	{
 		
-		private const dataName:String = 'test-attribute';
-		private const dataAccessorName:String = 'test-attribute-accessor';
-		private const dataType:Class = Boolean;
-		private const listClass:Class = InnerObject;
+		private const _dataName:String = 'test-attribute';
+		private const _dataAccessorName:String = 'test-attribute-accessor';
+		private const _dataWrapperNodeName:String = 'test-wrapper-node';
+		private const _dataType:Class = Boolean;
+		private const _listClass:Class = InnerObject;
 
 		private var _data:XMLData;
 				
@@ -20,34 +21,41 @@ package asaxb.xml.helpers
 		public function setUp():void
 		{
 			_data = new XMLData();
-			_data.name = dataName;
-			_data.accessorName = dataAccessorName;
-			_data.type = dataType;
-			_data.listClass = listClass;
+			_data.name = _dataName;
+			_data.accessorName = _dataAccessorName;
+			_data.type = _dataType;
+			_data.listClass = _listClass;
+			_data.wrapperNodeName = _dataWrapperNodeName;
 		}
 		
 		[Test]
 		public function testName():void
 		{
-			assertThat(_data.name,equalTo(dataName));
+			assertThat(_data.name,equalTo(_dataName));
 		}
 
 		[Test]
 		public function testAccessorName():void
 		{
-			assertThat(_data.accessorName,equalTo(dataAccessorName));
+			assertThat(_data.accessorName,equalTo(_dataAccessorName));
 		}
 
 		[Test]
 		public function testType():void
 		{
-			assertThat(_data.type,equalTo(dataType));
+			assertThat(_data.type,equalTo(_dataType));
 		}
 
 		[Test]
 		public function testListClass():void
 		{
-			assertThat(_data.listClass,equalTo(listClass));
+			assertThat(_data.listClass,equalTo(_listClass));
+		}
+
+		[Test]
+		public function testWrapperNodeName():void
+		{
+			assertThat(_data.wrapperNodeName,equalTo(_dataWrapperNodeName));
 		}
 
 	}
