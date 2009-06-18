@@ -4,10 +4,8 @@ package asaxb.xml.helpers
 	import flash.utils.getDefinitionByName;
 	
 	import org.as3commons.reflect.AbstractMember;
-	import org.as3commons.reflect.Accessor;
 	import org.as3commons.reflect.MetaData;
 	import org.as3commons.reflect.Type;
-	import org.as3commons.reflect.Variable;
 
 	public class MarshalData
 	{
@@ -41,80 +39,37 @@ package asaxb.xml.helpers
 		
 		private function extractAttributes(type:Type):void
 		{
-			var metadata:MetaData;
-			var attribute:XMLData;
 			_attributes = [];
-			for each (var accessor:Accessor in type.accessors)
-			{ 
-				for each (metadata in accessor.metaData)
-				{
-					if (metadata.name == "XmlAttribute")
-					{
-						_attributes.push(createXMLDataFromMember(metadata,accessor));
-					}
-				}
-			}	
-			for each (var variable:Variable in type.variables)
-			{
-				for each (metadata in variable.metaData)
-				{
-					if (metadata.name == "XmlAttribute")
-					{
-						_attributes.push(createXMLDataFromMember(metadata,variable));
-					}					
-				}
-			}		
+			appendMembersWithMetadata(_attributes,type.accessors,"XmlAttribute")
+			appendMembersWithMetadata(_attributes,type.variables,"XmlAttribute")
 		}
-		
 		
 		private function extractElements(type:Type):void
 		{
 			_elements = [];
-			for each (var accessor:Accessor in type.accessors)
-			{ 
-				for each (var metadata:MetaData in accessor.metaData)
-				{
-					if (metadata.name == "XmlElement")
-					{
-						_elements.push(createXMLDataFromMember(metadata,accessor));
-					}
-				}
-			}
-			for each (var variable:Variable in type.variables)
-			{
-				for each (metadata in variable.metaData)
-				{
-					if (metadata.name == "XmlElement")
-					{
-						_elements.push(createXMLDataFromMember(metadata,variable));
-					}
-				}
-			}
+			appendMembersWithMetadata(_elements,type.accessors,"XmlElement")
+			appendMembersWithMetadata(_elements,type.variables,"XmlElement")
 		}
 		
 		private function extractElementsLists(type:Type):void
 		{
 			_elementsLists = [];
-			for each (var accessor:Accessor in type.accessors)
+			appendMembersWithMetadata(_elementsLists,type.accessors,"XmlElements")
+			appendMembersWithMetadata(_elementsLists,type.variables,"XmlElements")
+		}
+		
+		private function appendMembersWithMetadata(filteredMembers:Array,newMembers:Array,metadataName:String):void
+		{
+			for each (var member:AbstractMember in newMembers)
 			{ 
-				for each (var metadata:MetaData in accessor.metaData)
+				for each (var metadata:MetaData in member.metaData)
 				{
-					if (metadata.name == 'XmlElements')
+					if (metadata.name == metadataName)
 					{
-						_elementsLists.push(createXMLDataFromMember(metadata,accessor));
+						filteredMembers.push(createXMLDataFromMember(metadata,member));
 					}
 				}
-			}
-			for each (var variable:Variable in type.variables)
-			{
-				for each (metadata in variable.metaData)
-				{
-					if (metadata.name == "XmlElements")
-					{
-						_elementsLists.push(createXMLDataFromMember(metadata,variable));
-					}
-				}
-			}
+			}				
 		}
 		
 		private function createXMLDataFromMember(metadata:MetaData,member:AbstractMember):XMLData
