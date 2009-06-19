@@ -1,6 +1,8 @@
 package asaxb.xml.helpers
 {
 		
+	import asaxb.xml.adapter.XMLAdapter;
+	
 	import flash.utils.getDefinitionByName;
 	
 	import org.as3commons.reflect.AbstractMember;
@@ -86,6 +88,12 @@ package asaxb.xml.helpers
 			{
 				var wrapper:MetaData = member.getMetaData("XmlElementWrapper")[0];
 				data.wrapperNodeName = wrapper.getArgument('name').value;
+			}
+			if (member.hasMetaData("XmlFlashTypeAdapter"))
+			{
+				var adapterData:MetaData = member.getMetaData("XmlFlashTypeAdapter")[0];
+				var adapterClass:Class = getDefinitionByName(adapterData.getArgument('type').value) as Class;
+				data.adapter = XMLAdapter(new adapterClass());
 			}
 			return data;
 		}

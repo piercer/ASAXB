@@ -1,5 +1,8 @@
 package asaxb.xml.helpers
 {
+	
+	import asaxb.xml.adapter.XMLAdapter;
+
 	public class XMLData
 	{
 		
@@ -8,6 +11,7 @@ package asaxb.xml.helpers
 		private var _wrapperNodeName:String;
 		private var _type:Class;
 		private var _listClass:Class;
+		private var _adapter:XMLAdapter;
 		
 		public function XMLData()
 		{
@@ -61,6 +65,16 @@ package asaxb.xml.helpers
 		public function set wrapperNodeName(v:String):void
 		{
 			_wrapperNodeName = v;
+		}
+
+		public function get adapter():XMLAdapter
+		{
+			return _adapter;
+		}
+
+		public function set adapter(v:XMLAdapter):void
+		{
+			_adapter = v;
 		}
 
 
