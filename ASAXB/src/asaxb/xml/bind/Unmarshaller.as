@@ -20,13 +20,13 @@ package asaxb.xml.bind
 			
 			for each (var attribute:XMLData in _marshalData.attributes)
 			{
-				object[attribute.accessorName] = getValueFromString(xml.@[attribute.name],attribute.type);
+				object[attribute.accessorName] = getValueFromString(xml.@[attribute.name], attribute);
 			}
 
 			for each (var element:XMLData in _marshalData.elements)
 			{
 				var elementXML:XMLList = getElementXML(xml,element);
-				object[element.accessorName] = getValueFromString(elementXML,element.type);
+				object[element.accessorName] = getValueFromString(elementXML, element);
 			}
 			
 			for each (var elementList:XMLData in _marshalData.elementsLists)
@@ -62,42 +62,52 @@ package asaxb.xml.bind
 			return elementXML;	
 		}
 		
-		public function getValueFromString(value:String, type:Class):*
+		public function getValueFromString(value:String, element:XMLData):*
 		{
 			var result:*;
-			switch (type)
+			if (element.adapter)
 			{
-
-				case Boolean:
-					result = (value=="true");
-					break;
-				
-				case uint:
-					result = uint(value);
-					break;
+				result = element.adapter.unmarshal(value);
+			}
+			else
+			{
+				switch (element.type)
+				{
+	
+					case Boolean:
+						result = (value=="true");
+						break;
 					
-				case int:
-					result = int(value);
-					break
-				
-				case String:
-					result = value;
-					break;
+					case uint:
+						result = uint(value);
+						break;
+						
+					case int:
+						result = int(value);
+						break
 					
-				case Number:
-					result = Number(value);
-					break;
-
-				default:
-					var innerContext:ASAXBContext = ASAXBContext.newInstance(type);
-					var innerUnmarshaller:Unmarshaller = innerContext.createUnmarshaller();
-					var InnerMarshalData:MarshalData = innerUnmarshaller.marshalData;
-					var rootNode:String = InnerMarshalData.rootNodeName;
-					if (rootNode!=null)
-					{
-						result = innerUnmarshaller.unmarshal(new XML(value));
-					}
+					case String:
+						result = value;
+						break;
+						
+					case Number:
+						result = Number(value);
+						break;
 					
+					case Date:
+						result = Date.parse(value);
+	
+					default:
+						var innerContext:ASAXBContext = ASAXBContext.newInstance(element.type);
+						var innerUnmarshaller:Unmarshaller = innerContext.createUnmarshaller();
+						var InnerMarshalData:MarshalData = innerUnmarshaller.marshalData;
+						var rootNode:String = InnerMarshalData.rootNodeName;
+						if (rootNode!=null)
+						{
+							result = innerUnmarshaller.unmarshal(new XML(value));
+						}
+						
+				}
 			}
 			return result;
 		}

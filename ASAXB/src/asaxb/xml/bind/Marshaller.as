@@ -89,6 +89,7 @@ package asaxb.xml.bind
 				case int:
 				case String:					
 				case Number:
+				case Date:
 					result = object[element.accessorName];
 					break;
 					
@@ -98,6 +99,10 @@ package asaxb.xml.bind
 					var marshaller:Marshaller = context.createMarshaller();
 					result = marshaller.marshal(object[element.accessorName]);
 					break;
+			}
+			if (element.adapter)
+			{
+				result = element.adapter.marshal(result);
 			}
 			return result;
 		}
