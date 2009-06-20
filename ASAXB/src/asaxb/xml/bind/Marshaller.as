@@ -30,7 +30,7 @@ package asaxb.xml.bind
 			
 			for each (var attribute:XMLData in _marshalData.attributes)
 			{
-				root.@[attribute.name]=object[attribute.accessorName];
+				root.@[attribute.name]=getElementValueFromXML(attribute,object);
 			}
 
 			for each (element in _marshalData.elements)
@@ -81,6 +81,7 @@ package asaxb.xml.bind
 		private function getElementValueFromXML(element:XMLData, object:*):*
 		{
 			var result:*;
+			trace(element.type);
 			switch (element.type)
 			{
 
