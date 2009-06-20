@@ -1,24 +1,25 @@
 package asaxb.xml.adapter
 {
-	import mx.formatters.DateFormatter;
+	import com.brooksandrus.utils.ISO8601Util;
 
 	public class DateAdapter implements XMLAdapter
 	{
 		
-		private var _formatter:DateFormatter
+		private var _formatter:ISO8601Util;
 
 		public function DateAdapter()
 		{
+			_formatter = new ISO8601Util();
 		}
 		
 		public function marshal(value:*):*
 		{
-			return value;
+			return _formatter.formatBasicDateTime(value);
 		}
 		
 		public function unmarshal(value:*):*
 		{
-			return new Date(Date.parse(value));
+			return _formatter.parseDateTimeString(value);
 		}
 
 	}
