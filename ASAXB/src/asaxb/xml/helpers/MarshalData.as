@@ -11,7 +11,14 @@ package asaxb.xml.helpers
 
 	public class MarshalData
 	{
-		
+
+		public static const XML_ROOT_NODE:String = "XmlRootNode";
+		public static const XML_AS_TYPE_ADAPTER:String = "XmlASTypeAdapter";
+		public static const XML_ATTRIBUTE:String = "XmlAttribute";
+		public static const XML_ELEMENT:String = "XmlElement";
+		public static const XML_ELEMENTS:String = "XmlElements";
+		public static const XML_ELEMENT_WRAPPER:String = "XmlElementWrapper";
+
 		private var _class:Class;
 		private var _rootNodeName:String;
 		private var _attributes:Array;
@@ -32,7 +39,7 @@ package asaxb.xml.helpers
 		{
 			for each (var metadata:MetaData in type.metaData)
 			{
-				if (metadata.name=="XmlRootNode")
+				if (metadata.name==XML_ROOT_NODE)
 				{
 					_rootNodeName = metadata.getArgument('name').value;
 				}
@@ -42,22 +49,22 @@ package asaxb.xml.helpers
 		private function extractAttributes(type:Type):void
 		{
 			_attributes = [];
-			appendMembersWithMetadata(_attributes,type.accessors,"XmlAttribute")
-			appendMembersWithMetadata(_attributes,type.variables,"XmlAttribute")
+			appendMembersWithMetadata(_attributes,type.accessors,XML_ATTRIBUTE)
+			appendMembersWithMetadata(_attributes,type.variables,XML_ATTRIBUTE)
 		}
 		
 		private function extractElements(type:Type):void
 		{
 			_elements = [];
-			appendMembersWithMetadata(_elements,type.accessors,"XmlElement")
-			appendMembersWithMetadata(_elements,type.variables,"XmlElement")
+			appendMembersWithMetadata(_elements,type.accessors,XML_ELEMENT)
+			appendMembersWithMetadata(_elements,type.variables,XML_ELEMENT)
 		}
 		
 		private function extractElementsLists(type:Type):void
 		{
 			_elementsLists = [];
-			appendMembersWithMetadata(_elementsLists,type.accessors,"XmlElements")
-			appendMembersWithMetadata(_elementsLists,type.variables,"XmlElements")
+			appendMembersWithMetadata(_elementsLists,type.accessors,XML_ELEMENTS)
+			appendMembersWithMetadata(_elementsLists,type.variables,XML_ELEMENTS)
 		}
 		
 		private function appendMembersWithMetadata(filteredMembers:Array,newMembers:Array,metadataName:String):void
@@ -84,14 +91,14 @@ package asaxb.xml.helpers
 			{
 				data.listClass = getDefinitionByName(metadata.getArgument('type').value) as Class;
 			}
-			if (member.hasMetaData("XmlElementWrapper"))
+			if (member.hasMetaData(XML_ELEMENT_WRAPPER))
 			{
-				var wrapper:MetaData = member.getMetaData("XmlElementWrapper")[0];
+				var wrapper:MetaData = member.getMetaData(XML_ELEMENT_WRAPPER)[0];
 				data.wrapperNodeName = wrapper.getArgument('name').value;
 			}
-			if (member.hasMetaData("XmlFlashTypeAdapter"))
+			if (member.hasMetaData(XML_AS_TYPE_ADAPTER))
 			{
-				var adapterData:MetaData = member.getMetaData("XmlFlashTypeAdapter")[0];
+				var adapterData:MetaData = member.getMetaData(XML_AS_TYPE_ADAPTER)[0];
 				var adapterClass:Class = getDefinitionByName(adapterData.getArgument('type').value) as Class;
 				data.adapter = XMLAdapter(new adapterClass());
 			}
