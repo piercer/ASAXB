@@ -43,9 +43,16 @@ package asaxb.xml.bind
 				}
 				else
 				{
-					var elementNode:XMLNode = new XMLNode(XMLNodeType.ELEMENT_NODE,element.name)
-					var elementValueNode:XMLNode = new XMLNode(XMLNodeType.TEXT_NODE,marshalledValue);
-					elementNode.appendChild(elementValueNode);
+					var elementNode:XML = <{element.name}></{element.name}>;
+					var elementValueType:uint = XMLNodeType.TEXT_NODE;
+					if (element.isCDATA)
+					{
+						elementNode = CDATA(element.name,marshalledValue);
+					}
+					else
+					{
+						elementNode = <{element.name}>{marshalledValue}</{element.name}>;
+					}
 					parentNode.appendChild(elementNode);
 				}
 			}
@@ -67,6 +74,11 @@ package asaxb.xml.bind
 			return root;
 		}
 		
+	    public function CDATA(outer: String, inner: String):XML
+    	{
+        	return <{outer}>{new XML("<![CDATA["+inner+"]]>")}</{outer}>;
+    	}
+		
 		private function getParentNodeForElement(root:XML,element:XMLData):XML
 		{
 			var parentNode:XML = root;
@@ -81,7 +93,6 @@ package asaxb.xml.bind
 		private function getElementValueFromXML(element:XMLData, object:*):*
 		{
 			var result:*;
-			trace(element.type);
 			switch (element.type)
 			{
 

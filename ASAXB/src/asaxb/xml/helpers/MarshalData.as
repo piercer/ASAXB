@@ -91,6 +91,10 @@ package asaxb.xml.helpers
 			{
 				data.listClass = getDefinitionByName(metadata.getArgument('type').value) as Class;
 			}
+			if (metadata.getArgument('CDATA'))
+			{
+				data.isCDATA = metadata.getArgument('CDATA').value == "true";
+			}
 			if (member.hasMetaData(XML_ELEMENT_WRAPPER))
 			{
 				var wrapper:MetaData = member.getMetaData(XML_ELEMENT_WRAPPER)[0];

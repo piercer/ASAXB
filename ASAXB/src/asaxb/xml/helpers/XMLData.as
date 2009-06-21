@@ -12,6 +12,7 @@ package asaxb.xml.helpers
 		private var _type:Class;
 		private var _listClass:Class;
 		private var _adapter:XMLAdapter;
+		private var _isCDATA:Boolean;
 		
 		public function XMLData()
 		{
@@ -75,6 +76,16 @@ package asaxb.xml.helpers
 		public function set adapter(v:XMLAdapter):void
 		{
 			_adapter = v;
+		}
+
+		public function get isCDATA():Boolean
+		{
+			return _isCDATA;
+		}
+
+		public function set isCDATA(v:Boolean):void
+		{
+			_isCDATA = v;
 		}
 
 
