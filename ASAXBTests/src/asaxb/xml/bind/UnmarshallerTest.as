@@ -15,10 +15,11 @@ package asaxb.xml.bind
 		private var _unmarshaller:Unmarshaller;
 		private var _object:OuterObject;
 		
-		private const _xml:XML = <outer-object level="1" outer="false" var1="Variable from XML">
+		private const _xml:XML = <outer-object xmlns:testns="http://zoltanb.co.uk/" level="1" outer="false" var1="Variable from XML">
 									<test-element>This is an element</test-element>
 									<var2>false</var2>
-									<inner-object level="2">
+									<testns:var3>namespace variable from xml</testns:var3>
+									<inner-object level="2" testns:var4="namespace attribute from xml">
 										<element>I'm inside at level 2</element>
 									</inner-object>
 									<inner-object level="2">
@@ -94,6 +95,19 @@ package asaxb.xml.bind
 			var innerInnerObject:InnerInnerObject = innerObject.elements[0];
 			assertThat(innerInnerObject.attribute1,equalTo(3));	
 			assertThat(innerInnerObject.element1,equalTo("I'm inside at level 3"));	
+		}
+		
+		[Test]
+		public function testNamespaceElement():void
+		{
+			assertThat(_object.variable3,equalTo("namespace variable from xml"));
+		}
+		
+		[Test]
+		public function testNamespaceAttribute():void
+		{
+			var innerObject:InnerObject = _object.innerObjects[0];
+			assertThat(innerObject.variable4,equalTo("namespace attribute from xml"));
 		}
 
 	}

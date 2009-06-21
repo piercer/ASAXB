@@ -43,15 +43,18 @@ package asaxb.xml.bind
 				}
 				else
 				{
-					var elementNode:XML = <{element.name}></{element.name}>;
+					
+					var elementNode:XML = new XML();//<{element.name}></{element.name}>;
 					var elementValueType:uint = XMLNodeType.TEXT_NODE;
+					var nsDef:String = getNameSpaceDef(element.name);
 					if (element.isCDATA)
 					{
-						elementNode = CDATA(element.name,marshalledValue);
+						elementNode = CDATA(element.name,marshalledValue, nsDef);
 					}
 					else
 					{
-						elementNode = <{element.name}>{marshalledValue}</{element.name}>;
+						elementNode = <{element.name + nsDef}>{marshalledValue}</{element.name}>;
+						
 					}
 					parentNode.appendChild(elementNode);
 				}
@@ -74,9 +77,21 @@ package asaxb.xml.bind
 			return root;
 		}
 		
-	    public function CDATA(outer: String, inner: String):XML
+		private function getNameSpaceDef(elementName:String):String
+		{
+			var nsDef: String = '';
+			if (elementName.indexOf(':')>0)
+			{
+				nsDef = ' xmlns:'+elementName.split(':')[0]+'="nsVal"';
+			}
+			return nsDef;
+		}
+		
+		
+		
+	    public function CDATA(outer: String, inner: String, nsDef:String):XML
     	{
-        	return <{outer}>{new XML("<![CDATA["+inner+"]]>")}</{outer}>;
+        	return <{outer+nsDef}>{new XML("<![CDATA["+inner+"]]>")}</{outer}>;
     	}
 		
 		private function getParentNodeForElement(root:XML,element:XMLData):XML

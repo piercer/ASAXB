@@ -11,6 +11,9 @@ package asaxb.test
 		[XmlElement(name="var2")]
 		public var variable2:Boolean;
 		
+		[XmlElement(name="testns:var3")]
+		public var variable3:String;
+		
 		private var _level:int;
 		private var _outer:Boolean;
 		private var _element:String;
@@ -25,6 +28,7 @@ package asaxb.test
 			_innerObjects = [];
 			variable1 = "This is a valiable attribute";
 			variable2 = true;
+			variable3 = "This is a variable attribute in testns namespace";
 		}
 		
 		public function addInnerObject(innerObject:InnerObject):void

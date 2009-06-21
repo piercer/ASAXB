@@ -13,9 +13,10 @@ package asaxb.xml.bind
 		
 		private var _xml:XML;
 		
-		private const _expectedXml:XML = <outer-object outer="true" level="1" var1="Variable attribute">
+		private const _expectedXml:XML = <outer-object xmlns:testns="http://zoltanb.co.uk/" testns:var4="namespace attribute from xml" outer="true" level="1" var1="Variable attribute">
 											<test-element>This is a test element</test-element>
 											<var2>true</var2>
+											<testns:var3>namespace variable from xml</testns:var3>
 											<inner-object level="2">
 												<element>I'm inside at level 2</element>
 											</inner-object>

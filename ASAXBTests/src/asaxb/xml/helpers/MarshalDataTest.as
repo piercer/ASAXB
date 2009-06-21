@@ -36,7 +36,7 @@ package asaxb.xml.helpers
 		[Test]
 		public function testElementsIsRightLength():void
 		{
-			assertThat(_elements.length,equalTo(2));
+			assertThat(_elements.length,equalTo(3));
 		}
 
 		[Test]

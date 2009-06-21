@@ -4,6 +4,8 @@ package asaxb.test
 	[XmlRootNode(name='inner-object')]
 	public class InnerObject
 	{
+		[XmlAttribute(name="testns:var4")]
+		public var variable4:String;
 		
 		private var _level:uint;
 		private var _element1:String;
