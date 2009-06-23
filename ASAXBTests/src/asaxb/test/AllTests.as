@@ -1,6 +1,7 @@
 package asaxb.test
 {
 	
+	import asaxb.xml.annotationtests.XmlElementTest;
 	import asaxb.xml.bind.ASAXBContextTest;
 	import asaxb.xml.bind.MarshallerTest;
 	import asaxb.xml.bind.UnmarshallerTest;
@@ -16,6 +17,8 @@ package asaxb.test
 		public var t3:MarshalDataTest;
 		public var t4:XMLDataTest;
 		public var t5:ASAXBContextTest;
+		
+		public var t6:XmlElementTest;
 	}
 
 }
