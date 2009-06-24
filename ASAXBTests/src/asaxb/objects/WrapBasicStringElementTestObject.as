@@ -2,7 +2,7 @@ package asaxb.objects
 {
 
 	[XmlRootNode(name='wrapped-basic-string-element-test')]
-	public class WrapperElementTestObject
+	public class WrapBasicStringElementTestObject
 	{
 		
 		public static const expectedXML:XML = <wrapped-basic-string-element-test>

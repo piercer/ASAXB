@@ -3,7 +3,8 @@ package asaxb.xml.annotationtests
 	
 	import asaxb.objects.BasicStringElementTestObject;
 	import asaxb.objects.CDATAStringElementTestObject;
-	import asaxb.objects.WrapperElementTestObject;
+	import asaxb.objects.WrapBasicStringElementTestObject;
+	import asaxb.objects.WrapCDATAStringElementTestObject;
 	import asaxb.xml.bind.ASAXBContext;
 	import asaxb.xml.bind.Marshaller;
 	
@@ -28,10 +29,17 @@ package asaxb.xml.annotationtests
 		}
 
 		[Test]
-		public function testWrapperElement():void
+		public function testWrapBasicStringElement():void
 		{
-			var result:XML = marshal(WrapperElementTestObject);
-			assertThat(result.toXMLString(),equalTo(WrapperElementTestObject.expectedXML.toXMLString()));
+			var result:XML = marshal(WrapBasicStringElementTestObject);
+			assertThat(result.toXMLString(),equalTo(WrapBasicStringElementTestObject.expectedXML.toXMLString()));
+		}
+
+		[Test]
+		public function testWrapCDATAStringElement():void
+		{
+			var result:XML = marshal(WrapCDATAStringElementTestObject);
+			assertThat(result.toXMLString(),equalTo(WrapCDATAStringElementTestObject.expectedXML.toXMLString()));
 		}
 		
 		private function marshal(klass:Class):XML
