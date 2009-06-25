@@ -21,16 +21,15 @@ package asaxb.xml.bind
 			for each (var attribute:XMLData in _marshalData.attributes)
 			{
 				var attributeNs: Namespace =getNameSpace(attribute.name,xml);
-				if (attributeNs!=null)
-				{
-					
-					var attributename:String = attribute.name.split(':')[1];
+				//if (attributeNs!=null)
+				//{
+					var attributename:String = (attribute.name.indexOf(':')>0)? attribute.name.split(':')[1]:attribute.name;
 					object[attribute.accessorName] = getValueFromString(xml.@attributeNs::[attributename],attribute);
-				}
-				else
-				{
-					object[attribute.accessorName] = getValueFromString(xml.@[attribute.name],attribute);
-				}
+				//}
+				//else
+				//{
+					//object[attribute.accessorName] = getValueFromString(xml.@[attribute.name],attribute);
+				//}
 				
 			}
 
@@ -38,15 +37,15 @@ package asaxb.xml.bind
 			{
 				var elementXML:XMLList = getElementXML(xml,element);
 				var elementNs: Namespace =getNameSpace(element.name,xml);
-				if (elementNs!=null)
-				{
-					var elementname:String = element.name.split(':')[1];
+//				if (elementNs!=null)
+//				{
+					var elementname:String = (element.name.indexOf(':')>0)? element.name.split(':')[1]:element.name;
 					object[element.accessorName] = getValueFromXML(xml.elementNs::[elementname],element);
-				}
-				else
-				{
-						object[element.accessorName] = getValueFromXML(xml[element.name],element);
-				}
+//				}
+//				else
+//				{
+//					object[element.accessorName] = getValueFromXML(xml[element.name],element);
+//				}
 			}
 			
 			for each (var elementList:XMLData in _marshalData.elementsLists)
@@ -71,6 +70,10 @@ package asaxb.xml.bind
 		public function getElementXML(xml:XML,element:XMLData):XMLList
 		{
 			var elementXML:XMLList;
+			var elementNs: Namespace =getNameSpace(element.name,xml);
+			
+			default xml namespace = elementNs;
+			
 			if (element.wrapperNodeName)
 			{
 				elementXML = xml[element.wrapperNodeName][element.name];
@@ -79,6 +82,8 @@ package asaxb.xml.bind
 			{
 				elementXML = xml[element.name];
 			}
+			
+			default xml namespace = new Namespace("");
 			return elementXML;	
 		}
 		
@@ -91,7 +96,6 @@ package asaxb.xml.bind
 			var rootNode:String = InnerMarshalData.rootNodeName;
 			if (rootNode!=null)
 			{
-				
 				result = innerUnmarshaller.unmarshal(XML(xmlList));
 			}
 			else
@@ -159,11 +163,11 @@ package asaxb.xml.bind
 			
 			if (name.indexOf(':')>0)
 			{
-				ns=xml.namespace(name.split(':')[0]);
+				ns = xml.namespace(name.split(':')[0]);
 			}
 			else
 			{
-				ns = null;
+				ns = xml.namespace();
 			}
 			return ns;
 		}
