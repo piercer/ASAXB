@@ -21,15 +21,15 @@ package asaxb.xml.bind
 			for each (var attribute:XMLData in _marshalData.attributes)
 			{
 				var attributeNs: Namespace =getNameSpace(attribute.name,xml);
-				//if (attributeNs!=null)
-				//{
+				if (attribute.name.indexOf(':')>0)
+				{
 					var attributename:String = (attribute.name.indexOf(':')>0)? attribute.name.split(':')[1]:attribute.name;
 					object[attribute.accessorName] = getValueFromString(xml.@attributeNs::[attributename],attribute);
-				//}
-				//else
-				//{
-					//object[attribute.accessorName] = getValueFromString(xml.@[attribute.name],attribute);
-				//}
+				}
+				else
+				{
+					object[attribute.accessorName] = getValueFromString(xml.@[attribute.name],attribute);
+				}
 				
 			}
 
@@ -71,16 +71,17 @@ package asaxb.xml.bind
 		{
 			var elementXML:XMLList;
 			var elementNs: Namespace =getNameSpace(element.name,xml);
+			var elementName:String = (element.name.indexOf(':')>0)? element.name.split(':')[1]:element.name;
 			
 			default xml namespace = elementNs;
 			
 			if (element.wrapperNodeName)
 			{
-				elementXML = xml[element.wrapperNodeName][element.name];
+				elementXML = xml[element.wrapperNodeName][elementName];
 			}
 			else
 			{
-				elementXML = xml[element.name];
+				elementXML = xml[elementName];
 			}
 			
 			default xml namespace = new Namespace("");
