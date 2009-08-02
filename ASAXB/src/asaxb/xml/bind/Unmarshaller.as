@@ -37,15 +37,8 @@ package asaxb.xml.bind
 			{
 				var elementXML:XMLList = getElementXML(xml,element);
 				var elementNs: Namespace =getNameSpace(element.name,xml);
-//				if (elementNs!=null)
-//				{
-					var elementname:String = (element.name.indexOf(':')>0)? element.name.split(':')[1]:element.name;
-					object[element.accessorName] = getValueFromXML(xml.elementNs::[elementname],element);
-//				}
-//				else
-//				{
-//					object[element.accessorName] = getValueFromXML(xml[element.name],element);
-//				}
+				var elementname:String = (element.name.indexOf(':')>0)? element.name.split(':')[1]:element.name;
+				object[element.accessorName] = getValueFromXML(xml.elementNs::[elementname],element);
 			}
 			
 			for each (var elementList:XMLData in _marshalData.elementsLists)
