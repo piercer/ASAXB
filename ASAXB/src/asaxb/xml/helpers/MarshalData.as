@@ -3,6 +3,7 @@ package asaxb.xml.helpers
 		
 	import asaxb.xml.adapter.XMLAdapter;
 	
+	import flash.system.ApplicationDomain;
 	import flash.utils.getDefinitionByName;
 	
 	import org.as3commons.reflect.AbstractMember;
@@ -24,11 +25,13 @@ package asaxb.xml.helpers
 		private var _attributes:Array;
 		private var _elements:Array;
 		private var _elementsLists:Array;
+		private var _applicationDomain:ApplicationDomain;
 
-		public function MarshalData(klass:Class)
+		public function MarshalData(klass:Class,applicationDomain:ApplicationDomain)
 		{
 			var type:Type = Type.forClass(klass);
 			_class = klass;
+			_applicationDomain = applicationDomain;
 			extractRootNodeName(type);
 			extractAttributes(type);
 			extractElements(type);
@@ -89,7 +92,7 @@ package asaxb.xml.helpers
 			data.type = member.type.clazz;
 			if (metadata.getArgument('type'))
 			{
-				data.listClass = getDefinitionByName(metadata.getArgument('type').value) as Class;
+				data.listClass = getDefinition(metadata.getArgument('type').value);
 			}
 			if (metadata.getArgument('CDATA'))
 			{
@@ -103,10 +106,24 @@ package asaxb.xml.helpers
 			if (member.hasMetaData(XML_AS_TYPE_ADAPTER))
 			{
 				var adapterData:MetaData = member.getMetaData(XML_AS_TYPE_ADAPTER)[0];
-				var adapterClass:Class = getDefinitionByName(adapterData.getArgument('type').value) as Class;
+				var adapterClass:Class = getDefinition(adapterData.getArgument('type').value);
 				data.adapter = XMLAdapter(new adapterClass());
 			}
 			return data;
+		}
+		
+		private function getDefinition(className:String):Class
+		{
+			var klass:Class;
+			if (_applicationDomain==null)
+			{
+				klass = getDefinitionByName(className) as Class;
+			}
+			else
+			{
+				klass = _applicationDomain.getDefinition(className) as Class;				
+			}
+			return klass;
 		}
 
 		public function get rootNodeName():String
@@ -133,6 +150,12 @@ package asaxb.xml.helpers
 		{
 			return _class;
 		}
+
+		public function get applicationDomain():ApplicationDomain
+		{
+			return _applicationDomain;
+		}
+
 
 	}
 }

@@ -53,7 +53,7 @@ package asaxb.xml.bind
 				var objectsXML:XMLList = getElementXML(xml,elementList);
 				var nObjects:int = objectsXML.length();
 				var innerObjects:Array = [];
-				var innerContext:ASAXBContext = ASAXBContext.newInstance(elementList.listClass);
+				var innerContext:ASAXBContext = ASAXBContext.newInstance(elementList.listClass,_marshalData.applicationDomain);
 				var innerUnmarshaller:Unmarshaller = innerContext.createUnmarshaller();
 				for (var i:int=0;i<nObjects;i++)
 				{
@@ -91,7 +91,7 @@ package asaxb.xml.bind
 		public function getValueFromXML(xmlList:XMLList, element:XMLData):*
 		{
 			var result:*;
-			var innerContext:ASAXBContext = ASAXBContext.newInstance(element.type);
+			var innerContext:ASAXBContext = ASAXBContext.newInstance(element.type,_marshalData.applicationDomain);
 			var innerUnmarshaller:Unmarshaller = innerContext.createUnmarshaller();
 			var InnerMarshalData:MarshalData = innerUnmarshaller.marshalData;
 			var rootNode:String = InnerMarshalData.rootNodeName;
@@ -144,7 +144,7 @@ package asaxb.xml.bind
 						result = Date.parse(value);
 	
 					default:
-						var innerContext:ASAXBContext = ASAXBContext.newInstance(element.type);
+						var innerContext:ASAXBContext = ASAXBContext.newInstance(element.type,_marshalData.applicationDomain);
 						var innerUnmarshaller:Unmarshaller = innerContext.createUnmarshaller();
 						var InnerMarshalData:MarshalData = innerUnmarshaller.marshalData;
 						var rootNode:String = InnerMarshalData.rootNodeName;
