@@ -16,7 +16,7 @@ package asaxb.xml.helpers
 		[Before]
 		public function setUp():void
 		{
-			_marshalData = new MarshalData(OuterObject);
+			_marshalData = new MarshalData(OuterObject,null);
 			_attributes = _marshalData.attributes;
 			_elements = _marshalData.elements;
 		}
