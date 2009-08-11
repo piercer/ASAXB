@@ -3,6 +3,7 @@ package asaxb.xml.bind
 
 	import asaxb.xml.helpers.MarshalData;
 	
+	import flash.system.ApplicationDomain;
 	import flash.utils.Dictionary;
 	import flash.utils.getQualifiedClassName;
 
@@ -15,18 +16,18 @@ package asaxb.xml.bind
 		private var _marshaller:Marshaller;
 		private var _unmarshaller:Unmarshaller;
 
-		public function ASAXBContext(klass:Class)
+		public function ASAXBContext(klass:Class, applicationDomain:ApplicationDomain=null)
 		{
-			_marshalData = new MarshalData(klass);
+			_marshalData = new MarshalData(klass,applicationDomain);
 		}
 		
-		public static function newInstance( klass:Class ):ASAXBContext
+		public static function newInstance( klass:Class, applicationDomain:ApplicationDomain=null ):ASAXBContext
 		{
 			var className:String = getQualifiedClassName(klass);
 			var instance:ASAXBContext = _instances[className];
 			if (!instance)
 			{
-				instance = new ASAXBContext(klass);
+				instance = new ASAXBContext(klass, applicationDomain);
 				_instances[className] = instance;
 			}
 			return instance;

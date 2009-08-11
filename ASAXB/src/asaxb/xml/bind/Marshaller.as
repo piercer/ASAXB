@@ -67,7 +67,7 @@ package asaxb.xml.bind
 				for each (var innerElement:* in elements)
 				{
 					var innerClass:Class = Class(getDefinitionByName(getQualifiedClassName(innerElement)));
-					var context:ASAXBContext = ASAXBContext.newInstance(innerClass);
+					var context:ASAXBContext = ASAXBContext.newInstance(innerClass,_marshalData.applicationDomain);
 					var marshaller:Marshaller = context.createMarshaller();
 					var elementXML:XML = marshaller.marshal(innerElement);
 					parentNode.appendChild(elementXML);
@@ -122,7 +122,7 @@ package asaxb.xml.bind
 					
 				default:
 					var innerClass:Class = Class(getDefinitionByName(getQualifiedClassName(element.type)));
-					var context:ASAXBContext = ASAXBContext.newInstance(innerClass);
+					var context:ASAXBContext = ASAXBContext.newInstance(innerClass,_marshalData.applicationDomain);
 					var marshaller:Marshaller = context.createMarshaller();
 					result = marshaller.marshal(object[element.accessorName]);
 					break;
