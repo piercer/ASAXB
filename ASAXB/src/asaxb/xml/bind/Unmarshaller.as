@@ -88,13 +88,16 @@ package asaxb.xml.bind
 			var innerUnmarshaller:Unmarshaller = innerContext.createUnmarshaller();
 			var InnerMarshalData:MarshalData = innerUnmarshaller.marshalData;
 			var rootNode:String = InnerMarshalData.rootNodeName;
-			if (rootNode!=null)
+			if (xmlList!=null)
 			{
-				result = innerUnmarshaller.unmarshal(XML(xmlList));
-			}
-			else
-			{
-				result = getValueFromString(xmlList,element)
+				if (rootNode!=null)
+				{
+					result = innerUnmarshaller.unmarshal(XML(xmlList));
+				}
+				else
+				{
+					result = getValueFromString(xmlList,element)
+				}
 			}
 			return result;
 					
