@@ -20,15 +20,20 @@ package asaxb.xml.bind
 			
 			for each (var attribute:XMLData in _marshalData.attributes)
 			{
+				var stringValuesForThisAttribute:XMLList;
 				var attributeNs: Namespace =getNameSpace(attribute.name,xml);
 				if (attribute.name.indexOf(':')>0)
 				{
 					var attributename:String = (attribute.name.indexOf(':')>0)? attribute.name.split(':')[1]:attribute.name;
-					object[attribute.accessorName] = getValueFromString(xml.@attributeNs::[attributename],attribute);
+					stringValuesForThisAttribute = xml.@attributeNs::[attributename];
 				}
 				else
 				{
-					object[attribute.accessorName] = getValueFromString(xml.@[attribute.name],attribute);
+					stringValuesForThisAttribute = xml.@[attribute.name];
+				}
+				if (stringValuesForThisAttribute!=null&&stringValuesForThisAttribute.length()>0)
+				{
+					object[attribute.accessorName] = getValueFromString(stringValuesForThisAttribute[0],attribute);
 				}
 				
 			}
@@ -38,7 +43,11 @@ package asaxb.xml.bind
 				var elementXML:XMLList = getElementXML(xml,element);
 				var elementNs: Namespace =getNameSpace(element.name,xml);
 				var elementname:String = (element.name.indexOf(':')>0)? element.name.split(':')[1]:element.name;
-				object[element.accessorName] = getValueFromXML(xml.elementNs::[elementname],element);
+				var xmlForThisElement:XMLList = xml.elementNs::[elementname];
+				if (xmlForThisElement!=null&&xmlForThisElement.length()>0)
+				{
+					object[element.accessorName] = getValueFromXML(xml.elementNs::[elementname],element);
+				}
 			}
 			
 			for each (var elementList:XMLData in _marshalData.elementsLists)
