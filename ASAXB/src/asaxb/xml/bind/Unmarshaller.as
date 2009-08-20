@@ -97,11 +97,11 @@ package asaxb.xml.bind
 			var innerUnmarshaller:Unmarshaller = innerContext.createUnmarshaller();
 			var InnerMarshalData:MarshalData = innerUnmarshaller.marshalData;
 			var rootNode:String = InnerMarshalData.rootNodeName;
-			if (xmlList!=null)
+			if (xmlList!=null && xmlList.length()>0)
 			{
 				if (rootNode!=null)
 				{
-					result = innerUnmarshaller.unmarshal(XML(xmlList));
+					result = innerUnmarshaller.unmarshal(XML(xmlList[0]));
 				}
 				else
 				{
