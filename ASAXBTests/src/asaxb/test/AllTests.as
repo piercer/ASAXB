@@ -9,6 +9,7 @@ package asaxb.test
 	import asaxb.xml.bind.UnmarshallerTest;
 	import asaxb.xml.helpers.MarshalDataTest;
 	import asaxb.xml.helpers.XMLDataTest;
+	import asaxb.xml.unmarshalling.ArrayOfStringsTest;
 	import asaxb.xml.unmarshalling.BlankAttributeTest;
 	import asaxb.xml.unmarshalling.BlankNameSpaceAttributeTest;
 	import asaxb.xml.unmarshalling.BlankNameSpaceElementTest;
@@ -31,6 +32,8 @@ package asaxb.test
 		
 		public var t10:DoubleXmlElementTest;
 		public var t11:BlankAttributeTest;
+		public var t12:ArrayOfStringsTest;
+		
 	}
 
 }
