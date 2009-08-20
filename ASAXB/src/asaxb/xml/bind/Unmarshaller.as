@@ -46,22 +46,37 @@ package asaxb.xml.bind
 				var xmlForThisElement:XMLList = xml.elementNs::[elementname];
 				if (xmlForThisElement!=null&&xmlForThisElement.length()>0)
 				{
-					object[element.accessorName] = getValueFromXML(xml.elementNs::[elementname],element);
+					object[element.accessorName] = getValueFromXMLList(xml.elementNs::[elementname],element);
 				}
 			}
 			
 			for each (var elementList:XMLData in _marshalData.elementsLists)
 			{
+				var i:int;
+				var objectXML:XML;
+				var innerObject:*;
 				var objectsXML:XMLList = getElementXML(xml,elementList);
 				var nObjects:int = objectsXML.length();
 				var innerObjects:Array = [];
-				var innerContext:ASAXBContext = ASAXBContext.newInstance(elementList.listClass,_marshalData.applicationDomain);
-				var innerUnmarshaller:Unmarshaller = innerContext.createUnmarshaller();
-				for (var i:int=0;i<nObjects;i++)
+				if (!isPrimitive(elementList.listClass))
 				{
-					var objectXML:XML = objectsXML[i];
-					var innerObject:* = innerUnmarshaller.unmarshal(objectXML);
-					innerObjects.push(innerObject);
+					var innerContext:ASAXBContext = ASAXBContext.newInstance(elementList.listClass,_marshalData.applicationDomain);
+					var innerUnmarshaller:Unmarshaller = innerContext.createUnmarshaller();
+					for (i=0;i<nObjects;i++)
+					{
+						objectXML = objectsXML[i];
+						innerObject = innerUnmarshaller.unmarshal(objectXML);
+						innerObjects.push(innerObject);
+					}
+				}
+				else
+				{
+					for (i=0;i<nObjects;i++)
+					{
+						objectXML = objectsXML[i];
+						innerObject = getPrimitiveTypeFromString(objectXML.children()[0],elementList.listClass);
+						innerObjects.push(innerObject);
+					}					
 				}
 				object[elementList.accessorName] = innerObjects;
 			}
@@ -69,7 +84,12 @@ package asaxb.xml.bind
 			return object;
 		}
 		
-		public function getElementXML(xml:XML,element:XMLData):XMLList
+		private function isPrimitive(klass:Class):Boolean
+		{
+			return (klass==String||klass==Boolean||klass==uint||klass==int||klass==Number||klass==Date);
+		}
+		
+		private function getElementXML(xml:XML,element:XMLData):XMLList
 		{
 			var elementXML:XMLList;
 			var elementNs: Namespace =getNameSpace(element.name,xml);
@@ -90,7 +110,7 @@ package asaxb.xml.bind
 			return elementXML;	
 		}
 		
-		public function getValueFromXML(xmlList:XMLList, element:XMLData):*
+		private function getValueFromXMLList(xmlList:XMLList, element:XMLData):*
 		{
 			var result:*;
 			var innerContext:ASAXBContext = ASAXBContext.newInstance(element.type,_marshalData.applicationDomain);
@@ -112,8 +132,29 @@ package asaxb.xml.bind
 					
 		}
 		
-		
-		public function getValueFromString(value:String, element:XMLData):*
+		private function getValueFromXML(xml:XML, element:XMLData):*
+		{
+			var result:*;
+			var innerContext:ASAXBContext = ASAXBContext.newInstance(element.type,_marshalData.applicationDomain);
+			var innerUnmarshaller:Unmarshaller = innerContext.createUnmarshaller();
+			var InnerMarshalData:MarshalData = innerUnmarshaller.marshalData;
+			var rootNode:String = InnerMarshalData.rootNodeName;
+			if (xml!=null)
+			{
+				if (rootNode!=null)
+				{
+					result = innerUnmarshaller.unmarshal(xml);
+				}
+				else
+				{
+					result = getValueFromString(xml,element)
+				}
+			}
+			return result;
+			
+		}
+
+		private function getValueFromString(value:String, element:XMLData):*
 		{
 			var result:*;
 			if (element.adapter)
@@ -122,43 +163,54 @@ package asaxb.xml.bind
 			}
 			else
 			{
-				switch (element.type)
+				if (isPrimitive(element.type))
 				{
-	
-					case Boolean:
-						result = (value=="true");
-						break;
-					
-					case uint:
-						result = uint(value);
-						break;
-						
-					case int:
-						result = int(value);
-						break
-					
-					case String:
-						result = value;
-						break;
-						
-					case Number:
-						result = Number(value);
-						break;
-					
-					case Date:
-						result = Date.parse(value);
-	
-					default:
-						var innerContext:ASAXBContext = ASAXBContext.newInstance(element.type,_marshalData.applicationDomain);
-						var innerUnmarshaller:Unmarshaller = innerContext.createUnmarshaller();
-						var InnerMarshalData:MarshalData = innerUnmarshaller.marshalData;
-						var rootNode:String = InnerMarshalData.rootNodeName;
-						if (rootNode!=null)
-						{
-							result = innerUnmarshaller.unmarshal(new XML(value));
-						}
-						
+					result = getPrimitiveTypeFromString(value,element.type);
 				}
+				else
+				{
+					var innerContext:ASAXBContext = ASAXBContext.newInstance(element.type,_marshalData.applicationDomain);
+					var innerUnmarshaller:Unmarshaller = innerContext.createUnmarshaller();
+					var InnerMarshalData:MarshalData = innerUnmarshaller.marshalData;
+					var rootNode:String = InnerMarshalData.rootNodeName;
+					if (rootNode!=null)
+					{
+						result = innerUnmarshaller.unmarshal(new XML(value));
+					}	
+				}
+			}
+			return result;
+		}
+		
+		private function getPrimitiveTypeFromString(value:String,type:Class):*
+		{
+			var result:*;
+			switch (type)
+			{
+				
+				case Boolean:
+					result = (value=="true");
+					break;
+				
+				case uint:
+					result = uint(value);
+					break;
+				
+				case int:
+					result = int(value);
+					break
+				
+				case String:
+					result = value;
+					break;
+				
+				case Number:
+					result = Number(value);
+					break;
+				
+				case Date:
+					result = Date.parse(value);
+					break;
 			}
 			return result;
 		}
