@@ -5,13 +5,14 @@ package asaxb.objects
 	public class BasicAttributeTestObject
 	{
 		
-		public static const expectedXML:XML = <basic-attribute-test basic-attribute="A basic attribute"/>;
+		public static const DEFAULT_ATTRIBUTE_VALUE:String = "defaultAttributeValue";
+		public static const expectedXML:XML = <basic-attribute-test basic-attribute="defaultAttributeValue"/>;
 		
 		public var _basicAttribute:String;
 		
 		public function BasicAttributeTestObject()
 		{
-			_basicAttribute = "A basic attribute";
+			_basicAttribute = DEFAULT_ATTRIBUTE_VALUE;
 		}
 				
 		[XmlAttribute(name='basic-attribute')]
