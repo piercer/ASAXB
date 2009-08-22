@@ -16,6 +16,8 @@ package asaxb.xml.unmarshalling
 			var result:ArrayOfStringsTestObject = unmarshal(ArrayOfStringsTestObject,ArrayOfStringsTestObject.xml);
 			assertThat(result.items.length,equalTo(3));
 			assertThat(result.items[0],equalTo("This is item one"));
+			assertThat(result.items[1],equalTo("This is item two"));
+			assertThat(result.items[2],equalTo("This is item three"));
 		}
 		
 		private function unmarshal(klass:Class,xml:XML):ArrayOfStringsTestObject
