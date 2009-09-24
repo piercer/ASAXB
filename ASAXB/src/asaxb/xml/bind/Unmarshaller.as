@@ -24,8 +24,7 @@ package asaxb.xml.bind
 				var attributeNs: Namespace =getNameSpace(attribute.name,xml);
 				if (attribute.name.indexOf(':')>0)
 				{
-					var attributename:String = (attribute.name.indexOf(':')>0)? attribute.name.split(':')[1]:attribute.name;
-					stringValuesForThisAttribute = xml.@attributeNs::[attributename];
+					stringValuesForThisAttribute = xml.@attributeNs::[attribute.name.split(':')[1]];
 				}
 				else
 				{
