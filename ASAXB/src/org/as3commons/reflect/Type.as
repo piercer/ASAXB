@@ -21,7 +21,7 @@
  */
 package org.as3commons.reflect 
 {
-	
+	import flash.system.ApplicationDomain;
 	import flash.utils.describeType;
 	import flash.utils.getDefinitionByName;
 	
@@ -52,7 +52,7 @@ package org.as3commons.reflect
 	 * @author Martino Piccinato
 	 */
 	public class Type extends MetaDataContainer 
-	{
+    {
 		
 		public static const UNTYPED:Type = new Type();
 		
@@ -61,6 +61,8 @@ package org.as3commons.reflect
 		public static const PRIVATE:Type = new Type();
 		
 		private static var _cache:Object = {};
+		
+		private static var _applicationDomain:ApplicationDomain;
 				
 		// --------------------------------------------------------------------
 		//
@@ -103,9 +105,12 @@ package org.as3commons.reflect
 					result = Type.UNTYPED;
 					break;
 				default:
-					try {
-						result = Type.forClass(Class(getDefinitionByName(name)));
-					} catch (e:ReferenceError) {
+					try 
+					{
+						result = Type.forClass(getDefinition(name));
+					} 
+					catch (e:ReferenceError) 
+					{
 						trace("Type.forName error: " + e.message + " The class '" + name + "' is probably an internal class or it may not have been compiled.");
 					}
 			
@@ -113,20 +118,41 @@ package org.as3commons.reflect
 			return result;
 		}
 		
+		private static function getDefinition(className:String):Class
+		{
+			var klass:Class;
+			if (_applicationDomain==null)
+			{
+				klass = getDefinitionByName(className) as Class;
+			}
+			else
+			{
+				klass = _applicationDomain.getDefinition(className) as Class;				
+			}
+			return klass;
+		}
+		
 		/**
 		 * Returns a <code>Type</code> object that describes the given class.
 		 *
 		 * @param clazz the class from which to get a type description
 		 */
-		public static function forClass(clazz:Class):Type {
-			var result:Type;
-			var fullyQualifiedClassName:String = org.as3commons.lang.ClassUtils.getFullyQualifiedName(clazz);
+		public static function forClass(clazz:Class, applicationDomain:ApplicationDomain = null):Type 
+		{
 			
-			if (_cache[fullyQualifiedClassName]) {
+			if (applicationDomain != null) {
+				_applicationDomain = applicationDomain;
+			}
+			
+			var result:Type;
+			var fullyQualifiedClassName:String = ClassUtils.getFullyQualifiedName(clazz);
+			if (_cache[fullyQualifiedClassName]) 
+			{
 				result = _cache[fullyQualifiedClassName];
-			} else {
+			} 
+			else 
+			{
 				result = new Type();
-				
 				// Add the Type to the cache before assigning any values to prevent looping.
 				// Due to the work-around implemented for constructor argument types
 				// in _getTypeDescription(), an instance is created, which could also
