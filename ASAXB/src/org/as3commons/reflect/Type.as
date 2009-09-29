@@ -81,7 +81,7 @@ package org.as3commons.reflect
 			var clazz:Class = ClassUtils.forInstance(instance);
 			
 			if (clazz != null) {
-				result = Type.forClass(clazz);
+				result = Type.forClass(clazz,_applicationDomain);
 			}
 			return result;
 		}
@@ -107,7 +107,7 @@ package org.as3commons.reflect
 				default:
 					try 
 					{
-						result = Type.forClass(getDefinition(name));
+						result = Type.forClass(getDefinition(name),_applicationDomain);
 					} 
 					catch (e:ReferenceError) 
 					{
@@ -139,10 +139,7 @@ package org.as3commons.reflect
 		 */
 		public static function forClass(clazz:Class, applicationDomain:ApplicationDomain = null):Type 
 		{
-			
-			if (applicationDomain != null) {
-				_applicationDomain = applicationDomain;
-			}
+			_applicationDomain = applicationDomain;
 			
 			var result:Type;
 			var fullyQualifiedClassName:String = ClassUtils.getFullyQualifiedName(clazz);
@@ -182,7 +179,7 @@ package org.as3commons.reflect
 				var numInterfaces:int = interfaces.length;
 				
 				for (var i:int = 0; i < numInterfaces; i++) {
-					var interfaze:Type = Type.forClass(interfaces[i]);
+					var interfaze:Type = Type.forClass(interfaces[i],_applicationDomain);
 					concatMetadata(result, interfaze.methods, "methods");
 					concatMetadata(result, interfaze.accessors, "accessors");
 					var interfaceMetaData:Array = interfaze.metaData;
