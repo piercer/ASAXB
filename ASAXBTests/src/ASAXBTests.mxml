@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" 
+	creationComplete="runMe()" xmlns:flexUnitUIRunner="http://www.adobe.com/2009/flexUnitUIRunner" 
+	styleName="flexUnitApplication" >
+	
+	<mx:Script>
+		<![CDATA[
+			import asaxb.test.AllTests;
+			
+			import org.flexunit.listeners.CIListener;
+			import org.flexunit.runner.FlexUnitCore;
+
+			private var core:FlexUnitCore;
+
+			public function runMe():void {
+
+				core = new FlexUnitCore();
+
+				core.addListener( new CIListener());
+				core.run( AllTests  );
+			}
+		]]>
+	</mx:Script>
+</mx:Application>
