@@ -38,9 +38,7 @@ If you are using the build file directly, below is the suggested call:
 
 		<!-- Create paths -->
 		<mkdir dir="${bin.loc}" />
-		<mkdir dir="${report.pmd.loc}" />
 		<mkdir dir="${dist.loc}" />
-		<mkdir dir="${doc.loc}" />
 	</target>
 
 	<target name="compile" depends="init">
