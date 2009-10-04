@@ -20,7 +20,7 @@ If you are using the build file directly, below is the suggested call:
 
 	<!-- Setup Flex Ant Resources -->
 	<property name="FLEX_HOME" location="${env.FLEX_HOME}" />
-	<taskdef resource="flexTasks.tasks" classpath="${env.FLEX_HOME}/ant/lib/flexTasks.jar" />
+	<taskdef resource="flexTasks.tasks" classpath="${FLEX_HOME}/ant/lib/flexTasks.jar" />
 
 	<target name="clean">
 		<delete includeemptydirs="true" failonerror="false">
