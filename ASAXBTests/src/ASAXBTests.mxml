@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" 
-	creationComplete="runMe()" xmlns:flexUnitUIRunner="http://www.adobe.com/2009/flexUnitUIRunner" 
-	styleName="flexUnitApplication" >
+	creationComplete="runMe()" 
+>
 	
 	<mx:Script>
 		<![CDATA[
