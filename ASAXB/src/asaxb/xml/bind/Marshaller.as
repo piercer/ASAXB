@@ -77,6 +77,7 @@ package asaxb.xml.bind
 			return root;
 		}
 		
+		
 		private function getNameSpaceDef(elementName:String):String
 		{
 			var nsDef: String = '';
@@ -121,7 +122,7 @@ package asaxb.xml.bind
 					break;
 					
 				default:
-					var innerClass:Class = Class(getDefinitionByName(getQualifiedClassName(element.type)));
+					var innerClass:Class = Class(getDefinition(getQualifiedClassName(element.type)));
 					var context:ASAXBContext = ASAXBContext.newInstance(innerClass,_marshalData.applicationDomain);
 					var marshaller:Marshaller = context.createMarshaller();
 					result = marshaller.marshal(object[element.accessorName]);
@@ -133,7 +134,20 @@ package asaxb.xml.bind
 			}
 			return result;
 		}
-
+		
+		private function getDefinition(className:String):Class
+		{
+			var klass:Class;
+			if (_marshalData.applicationDomain==null)
+			{
+				klass = getDefinitionByName(className) as Class;
+			}
+			else
+			{
+				klass = _marshalData.applicationDomain.getDefinition(className) as Class;				
+			}
+			return klass;
+		}
 
 	}
 

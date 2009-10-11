@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" minWidth="1024" minHeight="768" xmlns:flexunit="flexunit.flexui.*"    creationComplete="onCreationComplete()" >	
+<mx:Script>
+	<![CDATA[
+
+		import org.flexunit.runner.Request;
+		import asaxb.test.AllTests;
+
+		public function currentRunTestSuite():Array
+		{
+			var testsToRun:Array = new Array();
+			testsToRun.push(asaxb.test.AllTests);
+			return testsToRun;
+		}
+		private function onCreationComplete():void
+		{
+			testRunner.runWithFlexUnit4Runner(currentRunTestSuite(), "ASAXBTests");
+		}
+]]>
+</mx:Script>
+<flexunit:FlexUnitTestRunnerUI id="testRunner"/>
+</mx:Application>

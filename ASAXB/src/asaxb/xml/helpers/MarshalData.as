@@ -29,7 +29,7 @@ package asaxb.xml.helpers
 
 		public function MarshalData(klass:Class,applicationDomain:ApplicationDomain)
 		{
-			var type:Type = Type.forClass(klass);
+			var type:Type = Type.forClass(klass, applicationDomain);
 			_class = klass;
 			_applicationDomain = applicationDomain;
 			extractRootNodeName(type);

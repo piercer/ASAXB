@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" minWidth="1024" minHeight="768">
+	
+<mx:Script>
+	<![CDATA[
+			import asaxb.test.AllTests;
+
+			private var asaxb_test_AllTests_obj:asaxb.test.AllTests;
+	]]>
+</mx:Script>
+	
+</mx:Application>

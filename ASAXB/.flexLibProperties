@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<flexLibProperties version="1">
+<flexLibProperties includeAllClasses="false" version="1">
   <includeClasses>
     <classEntry path="asaxb.xml.adapter.DateAdapter"/>
     <classEntry path="asaxb.xml.adapter.XMLAdapter"/>
@@ -8,7 +8,6 @@
     <classEntry path="asaxb.xml.bind.Unmarshaller"/>
     <classEntry path="asaxb.xml.helpers.MarshalData"/>
     <classEntry path="asaxb.xml.helpers.XMLData"/>
-    <classEntry path="com.brooksandrus.utils.ISO8601Util"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
