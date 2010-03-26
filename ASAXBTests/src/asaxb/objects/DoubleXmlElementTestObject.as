@@ -1,7 +1,7 @@
 package asaxb.objects
 {
 	
-	[XmlRootNode(name='double-element-test')]
+	[XmlRootNode(name="double-element-test")]
 	public class DoubleXmlElementTestObject
 	{
 		

@@ -1,7 +1,7 @@
 package asaxb.objects
 {
 
-	[XmlRootNode(name='basic-string-element-test')]
+	[XmlRootNode(name="basic-string-element-test")]
 	public class BasicStringElementTestObject
 	{
 		
@@ -16,7 +16,7 @@ package asaxb.objects
 			_basicStringElement = 'A basic String element';
 		}
 		
-		[XmlElement(name='basic-string-element')]
+		[XmlElement(name="basic-string-element")]
 		public function get basicStringElement():String
 		{
 			return _basicStringElement;

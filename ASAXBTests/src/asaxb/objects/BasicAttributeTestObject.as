@@ -1,7 +1,7 @@
 package asaxb.objects
 {
 
-	[XmlRootNode(name='basic-attribute-test')]
+	[XmlRootNode(name="basic-attribute-test")]
 	public class BasicAttributeTestObject
 	{
 		

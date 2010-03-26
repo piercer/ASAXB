@@ -1,7 +1,7 @@
 package asaxb.objects
 {
 	
-	[XmlRootNode(name='blank-attribute-test')]
+	[XmlRootNode(name="blank-attribute-test")]
 	public class BlankAttributeTestObject
 	{
 		

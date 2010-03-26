@@ -1,7 +1,7 @@
 package asaxb.objects
 {
 	
-	[XmlRootNode(name='config')]
+	[XmlRootNode(name="config")]
 	public class ArrayOfStringsTestObject
 	{
 		
@@ -13,8 +13,8 @@ package asaxb.objects
      									</items>
 									  </config>;
 		
-		[XmlElementWrapper(name='items')]
-		[XmlElements(name='item',type='String')]
+		[XmlElementWrapper(name="items")]
+		[XmlElements(name="item",type="String")]
 		public var items:Array;
 
 	}

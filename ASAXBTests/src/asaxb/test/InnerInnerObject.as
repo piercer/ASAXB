@@ -1,7 +1,7 @@
 package asaxb.test
 {
 
-	[XmlRootNode(name='inner-inner-object')]
+	[XmlRootNode(name="inner-inner-object")]
 	public class InnerInnerObject
 	{
 		

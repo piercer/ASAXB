@@ -1,7 +1,7 @@
 package asaxb.objects
 {
 
-	[XmlRootNode(name='wrapped-basic-string-element-test')]
+	[XmlRootNode(name="wrapped-basic-string-element-test")]
 	public class WrapCDATAStringElementTestObject
 	{
 		
@@ -11,8 +11,8 @@ package asaxb.objects
 							  					</test-wrapper>
 							  		 		  </wrapped-basic-string-element-test>;
 		
-		[XmlElementWrapper(name='test-wrapper')]
-		[XmlElement(name='basic-string-element',CDATA='true')]
+		[XmlElementWrapper(name="test-wrapper")]
+		[XmlElement(name="basic-string-element",CDATA="true")]
 		public function get basicStringElement():String
 		{
 			return 'A wrapped basic String element';
