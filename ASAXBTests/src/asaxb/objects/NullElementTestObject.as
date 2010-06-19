@@ -10,11 +10,7 @@ package asaxb.objects
 							  		 		  </null-element-test>;
 		
 		private var _nullElement:String;
-		
-		public function NullElementTestObject()
-		{
-		}
-		
+				
 		[XmlElement(name="null-element")]
 		public function get nullElement():String
 		{

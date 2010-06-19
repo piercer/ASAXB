@@ -25,18 +25,27 @@ package asaxb.xml.bind
 			var name:String;
 			var element:XMLData;
 			var parentNode:XML;
+			var marshalledValue:*;
 
 			var root:XML = <{_marshalData.rootNodeName}/>;
 			
 			for each (var attribute:XMLData in _marshalData.attributes)
 			{
-				root.@[attribute.name]=getElementValueFromXML(attribute,object);
+				marshalledValue = getElementValueFromXML(attribute,object);
+				if (marshalledValue==null)
+				{
+					root.@[attribute.name] = "";
+				}
+				else
+				{
+					root.@[attribute.name] = marshalledValue;
+				}
 			}
 
 			for each (element in _marshalData.elements)
 			{
 				parentNode = getParentNodeForElement(root,element);
-				var marshalledValue:* = getElementValueFromXML(element,object);
+				marshalledValue = getElementValueFromXML(element,object);
 				if (marshalledValue is XML)
 				{
 					parentNode.appendChild(marshalledValue);

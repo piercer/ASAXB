@@ -1,19 +1,19 @@
-package asaxb.xml.unmarshalling
+package asaxb.xml.marshalling
 {
-	import asaxb.objects.NullElementTestObject;
+	import asaxb.objects.NullAttributeTestObject;
 	import asaxb.xml.bind.ASAXBContext;
 	import asaxb.xml.bind.Marshaller;
 	
 	import org.flexunit.assertThat;
 	import org.hamcrest.object.equalTo;
 
-	public class NullElementTest
+	public class NullAttributeTest
 	{		
 		[Test]
-		public function testUnmarshallNullElement():void
+		public function testMarshallNullAttribute():void
 		{
-			var result:XML = marshal(NullElementTestObject);
-			assertThat(result.toXMLString(),equalTo(NullElementTestObject.expectedXML.toXMLString()));
+			var result:XML = marshal(NullAttributeTestObject);
+			assertThat(result.toXMLString(),equalTo(NullAttributeTestObject.expectedXML.toXMLString()));
 		}
 		
 		private function marshal(klass:Class):XML
