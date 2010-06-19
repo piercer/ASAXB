@@ -47,14 +47,17 @@ package asaxb.xml.bind
 					var elementNode:XML = new XML();//<{element.name}></{element.name}>;
 					var elementValueType:uint = XMLNodeType.TEXT_NODE;
 					var nsDef:String = getNameSpaceDef(element.name);
-					if (element.isCDATA)
+					if (marshalledValue==null)
+					{
+						elementNode = <{element.name + nsDef}></{element.name}>;						
+					}
+					else if (element.isCDATA)
 					{
 						elementNode = CDATA(element.name,marshalledValue, nsDef);
 					}
 					else
 					{
 						elementNode = <{element.name + nsDef}>{marshalledValue}</{element.name}>;
-						
 					}
 					parentNode.appendChild(elementNode);
 				}
