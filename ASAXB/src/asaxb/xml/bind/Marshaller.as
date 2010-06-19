@@ -48,6 +48,10 @@ package asaxb.xml.bind
 				marshalledValue = getElementValueFromXML(element,object);
 				if (marshalledValue is XML)
 				{
+					if(element.name != null) 
+					{
+						(marshalledValue as XML).setName(element.name);
+					}
 					parentNode.appendChild(marshalledValue);
 				}
 				else
