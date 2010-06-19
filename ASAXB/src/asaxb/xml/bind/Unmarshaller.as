@@ -208,7 +208,7 @@ package asaxb.xml.bind
 					break;
 				
 				case Date:
-					result = Date.parse(value);
+					result = new Date( Date.parse(value) ); 
 					break;
 			}
 			return result;
