@@ -62,21 +62,27 @@
          <version>1.3</version>
          <type>swc</type>
       </dependency>
-      <!-- Nice POM bundle available per SDK on Sonatype thanks to Flex-Mojos -->
       <dependency>
          <groupId>com.adobe.flex.framework</groupId>
          <artifactId>flex-framework</artifactId>
          <version>${flex.sdk.version}</version>
          <type>pom</type>
       </dependency>
-      <!-- Based on testing library dependency specified, FlexMojos will know how to test your application -->
       <dependency>
          <groupId>com.adobe.flexunit</groupId>
-         <artifactId>flexunit</artifactId>
-         <version>4.0-rc-1</version>
+         <artifactId>flexunit-flex-sdk4.0</artifactId>
+         <version>4.1.0-beta2</version>
+         <classifier>flexunit-core</classifier>
          <type>swc</type>
          <scope>test</scope>
       </dependency>
+       <dependency>
+           <groupId>com.adobe.flexunit</groupId>
+           <artifactId>flexunit</artifactId>
+           <version>4.1.0-beta3</version>
+            <type>swc</type>
+           <scope>test</scope>
+        </dependency>
    </dependencies>
    
 </project>

@@ -1,4 +1,4 @@
-ASAXB/.flexLibProperties
-ASAXB/.actionScriptProperties
 ASAXB/target/
 .DS_Store
+.idea/
+ASAXB/asaxb.iml
