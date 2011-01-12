@@ -4,3 +4,5 @@ ASAXB/target/
 ASAXBTests/target/
 ASAXBTests/bin-debug/
 .DS_Store
+
+/.idea/
